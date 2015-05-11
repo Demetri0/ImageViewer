@@ -265,7 +265,15 @@
    <addaction name="actionPrevPicture"/>
    <addaction name="actionNextPicture"/>
    <addaction name="separator"/>
+   <addaction name="actionScaled_content"/>
    <addaction name="actionCloseImage"/>
+   <addaction name="separator"/>
+   <addaction name="actionClear"/>
+   <addaction name="actionLoad"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionRemove_selected"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenPicture">
@@ -386,6 +394,9 @@
   <action name="actionScaled_content">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="zoom-fit-best"/>
    </property>
    <property name="text">
     <string>Scaled content</string>

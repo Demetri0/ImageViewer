@@ -6,17 +6,43 @@
 #include <QProgressBar>
 #include <QMimeType>
 #include <QImageReader>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     ui.setupUi(this);
+    QSettings cfg;
+    restoreGeometry( cfg.value("MainWindows/Geometry").toByteArray() );
+    restoreState( cfg.value("MainWindows/State").toByteArray() );
+
+    ui.splitter->restoreGeometry( cfg.value("MWSplitter/Geometry").toByteArray() );
+    ui.splitter->restoreState( cfg.value("MWSplitter/State").toByteArray() );
+
+    emit ui.actionBottom_buttons->triggered( cfg.value("View/BottomButtons", true).toBool() );
+    ui.actionBottom_buttons->setChecked( cfg.value("View/BottomButtons", true).toBool() );
+    emit ui.actionHistory->triggered( cfg.value("View/History", true).toBool() );
+    ui.actionHistory->setChecked( cfg.value("View/History", true).toBool() );
+
     ui.ListView_History->setModel( &_historyModel );
     ui.statusBar->addWidget( &statusFilePath );
     ui.statusBar->addWidget( new QWidget, 100 );
     ui.statusBar->addWidget( &statusImageWidth );
     ui.statusBar->addWidget( &statusImageHeight );
     ui.statusBar->addWidget( &statusImageFormat );
+}
+
+MainWindow::~MainWindow()
+{
+    QSettings cfg;
+    cfg.setValue("MainWindows/Geometry", this->saveGeometry());
+    cfg.setValue("MainWindows/State", this->saveState());
+
+    cfg.setValue("MWSplitter/Geometry", ui.splitter->saveGeometry() );
+    cfg.setValue("MWSplitter/State", ui.splitter->saveState() );
+
+    cfg.setValue("View/BottomButtons", ui.actionBottom_buttons->isChecked());
+    cfg.setValue("View/History", ui.actionHistory->isChecked());
 }
 
 void MainWindow::on_actionExit_triggered()
