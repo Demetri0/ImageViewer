@@ -8,12 +8,13 @@
 #include <QGraphicsPixmapItem>
 #include <QLabel>
 
+#include "imageviewer.h"
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 private:
-    QGraphicsScene _scene;
-    QGraphicsPixmapItem _pixmap;
+    ImageViewer _view;
 
 public:
     explicit MainWindow(QWidget *parent = 0);

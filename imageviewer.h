@@ -1,22 +1,30 @@
 #ifndef IMAGEVIEWER_H
 #define IMAGEVIEWER_H
 
-#include <QWidget>
-#include <QPixmap>
-#include <QPainter>
+#include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
-class ImageViewer : public QWidget
+class ImageViewer : public QGraphicsView
 {
     Q_OBJECT
 private:
-    QPixmap _pixmap;
+    QGraphicsScene      _scene;
+    QGraphicsPixmapItem _pixmap;
+
+
+    void initScene();
+    void changeScale(qreal scale);
 
 public:
     ImageViewer(QWidget *parent = 0);
     ImageViewer(const QString &filePath, QWidget *parent = 0);
+    ImageViewer(const QPixmap &pixmap, QWidget *parent = 0);
+
+    void setPixmap(const QPixmap &pixmap);
+    QPixmap pixmap();
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void wheelEvent(QWheelEvent *e);
 };
 
 #endif // IMAGEVIEWER_H

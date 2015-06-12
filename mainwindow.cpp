@@ -35,8 +35,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.statusBar->addWidget( &statusImageHeight );
     ui.statusBar->addWidget( &statusImageFormat );
 
-    ui.GraphicsView_Image->setScene( &_scene );
-    _scene.addItem( &_pixmap );
+//    ui.GraphicsView_Image->setScene( &_scene );
+//    _scene.addItem( &_pixmap );
+//    ui.verticalLayout->addWidget( &_view );
 }
 
 MainWindow::~MainWindow()
@@ -72,29 +73,6 @@ void MainWindow::on_actionOpenPicture_triggered()
     progress.setModal( true );
     progress.setLabelText( tr("Files opening...") );
     progress.show();
-
-//        if( true ){
-//            foreach (QString filePath, files) {
-//                if( ! progress.isVisible() )
-//                    return;
-//                addToHistory( filePath );
-
-
-//                QPixmap pm;
-//                if( pm.load( filePath ) ){
-//                    auto scene = new QGraphicsScene;
-//                    auto img = new QGraphicsPixmapItem( pm );
-//                    img->setRotation(45);
-//                    scene->addItem( img );
-//                    ui.graphicsView->setScene( scene );
-//                }
-
-//                progress.setValue( ++i );
-//                qApp->processEvents();
-//            }
-
-//            return;
-//        }
 
     foreach (QString filePath, files) {
         if( ! progress.isVisible() )
@@ -136,7 +114,8 @@ bool MainWindow::openPicture(const QString &filePath)
             statusImageHeight.setText( "H: " + QString::number( pm.height() ) );
             statusImageFormat.setText( ImageFormat );
 
-            _pixmap.setPixmap( pm );
+//            _view.setPixmap( pm );
+            ui.Pixmap->setPixmap( pm );
             return true;
         }
     }
@@ -189,7 +168,7 @@ void MainWindow::on_actionBottom_buttons_triggered(bool checked)
 void MainWindow::on_actionCloseImage_triggered()
 {
     /// \todo crash fix it
-    _scene.clear();
+//    _scene.clear();
 }
 
 void MainWindow::on_actionNextPicture_triggered()
@@ -262,8 +241,8 @@ void MainWindow::on_actionLoad_triggered()
 void MainWindow::on_actionScaled_content_triggered(bool checked)
 {
     /// \todo Adjust scale
-    if(checked)
-        _pixmap.setScale(1);
+//    if(checked)
+//        _pixmap.setScale(1);
 }
 
 void MainWindow::on_actionRemove_selected_triggered()
