@@ -110,8 +110,8 @@ bool MainWindow::openPicture(const QString &filePath)
         if( pm.load( filePath ) ){
 
             statusFilePath.setText( filePath );
-            statusImageWidth.setText( "W: " + QString::number( pm.width() ) );
-            statusImageHeight.setText( "H: " + QString::number( pm.height() ) );
+            statusImageWidth.setText( tr("W: ", "Image width") + QString::number( pm.width() ) );
+            statusImageHeight.setText( tr("H: ", "Image height") + QString::number( pm.height() ) );
             statusImageFormat.setText( ImageFormat );
 
 //            _view.setPixmap( pm );
@@ -233,7 +233,7 @@ void MainWindow::on_actionLoad_triggered()
                 notFindCounter++;
         }
         file.close();
-        statusFilePath.setText( "История загружена. %n" );
+        statusFilePath.setText( tr("History is succesfull load.") );
         _historyModel.setStringList( _history );
     }
 }
