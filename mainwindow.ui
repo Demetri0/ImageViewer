@@ -14,81 +14,13 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="Splitter_Main">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QScrollArea" name="scrollArea">
-       <property name="widgetResizable">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-       </property>
-       <widget class="QWidget" name="scrollAreaWidgetContents_3">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>459</width>
-          <height>417</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="Label_Image">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="baseSize">
-            <size>
-             <width>500</width>
-             <height>400</height>
-            </size>
-           </property>
-           <property name="acceptDrops">
-            <bool>false</bool>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="frameShadow">
-            <enum>QFrame::Sunken</enum>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="scaledContents">
-            <bool>false</bool>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
+      <widget class="QGraphicsView" name="GraphicsView_Image"/>
       <widget class="QListView" name="ListView_History">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
@@ -147,7 +79,9 @@
           <string>&lt;</string>
          </property>
          <property name="icon">
-          <iconset theme="back"/>
+          <iconset theme="back">
+           <normaloff/>
+          </iconset>
          </property>
         </widget>
        </item>
@@ -160,7 +94,9 @@
           <string>&gt;</string>
          </property>
          <property name="icon">
-          <iconset theme="next"/>
+          <iconset theme="next">
+           <normaloff/>
+          </iconset>
          </property>
         </widget>
        </item>
@@ -189,7 +125,9 @@
           <string>Play</string>
          </property>
          <property name="icon">
-          <iconset theme="media-playback-start"/>
+          <iconset theme="media-playback-start">
+           <normaloff/>
+          </iconset>
          </property>
         </widget>
        </item>
@@ -199,7 +137,9 @@
           <string>Open</string>
          </property>
          <property name="icon">
-          <iconset theme="document-open"/>
+          <iconset theme="document-open">
+           <normaloff/>
+          </iconset>
          </property>
         </widget>
        </item>
@@ -214,7 +154,7 @@
      <x>0</x>
      <y>0</y>
      <width>760</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -278,7 +218,9 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenPicture">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>OpenPicture</string>
@@ -289,7 +231,9 @@
   </action>
   <action name="actionPlaySlideShow">
    <property name="icon">
-    <iconset theme="media-playback-start"/>
+    <iconset theme="media-playback-start">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>PlaySlideShow</string>
@@ -300,7 +244,9 @@
   </action>
   <action name="actionNextPicture">
    <property name="icon">
-    <iconset theme="next"/>
+    <iconset theme="next">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>NextPicture</string>
@@ -311,7 +257,9 @@
   </action>
   <action name="actionPrevPicture">
    <property name="icon">
-    <iconset theme="previous"/>
+    <iconset theme="previous">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>PrevPicture</string>
@@ -322,7 +270,9 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="exit"/>
+    <iconset theme="exit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -336,7 +286,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="window-close"/>
+    <iconset theme="window-close">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>CloseImage</string>
@@ -369,7 +321,9 @@
   </action>
   <action name="actionClear">
    <property name="icon">
-    <iconset theme="edit-clear"/>
+    <iconset theme="edit-clear">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Clear</string>
@@ -377,7 +331,9 @@
   </action>
   <action name="actionLoad">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Load</string>
@@ -385,7 +341,9 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset theme="document-save"/>
+    <iconset theme="document-save">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -396,7 +354,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="zoom-fit-best"/>
+    <iconset theme="zoom-fit-best">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Scaled content</string>
@@ -404,7 +364,9 @@
   </action>
   <action name="actionRemove_selected">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Remove selected</string>

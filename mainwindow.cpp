@@ -7,6 +7,10 @@
 #include <QMimeType>
 #include <QImageReader>
 #include <QSettings>
+#include <QVector>
+#include <QProgressDialog>
+
+#include "imageviewer.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -16,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     restoreGeometry( cfg.value("MainWindows/Geometry").toByteArray() );
     restoreState( cfg.value("MainWindows/State").toByteArray() );
 
-    ui.splitter->restoreGeometry( cfg.value("MWSplitter/Geometry").toByteArray() );
-    ui.splitter->restoreState( cfg.value("MWSplitter/State").toByteArray() );
+    ui.Splitter_Main->restoreGeometry( cfg.value("MWSplitter/Geometry").toByteArray() );
+    ui.Splitter_Main->restoreState( cfg.value("MWSplitter/State").toByteArray() );
 
     emit ui.actionBottom_buttons->triggered( cfg.value("View/BottomButtons", true).toBool() );
     ui.actionBottom_buttons->setChecked( cfg.value("View/BottomButtons", true).toBool() );
@@ -30,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui.statusBar->addWidget( &statusImageWidth );
     ui.statusBar->addWidget( &statusImageHeight );
     ui.statusBar->addWidget( &statusImageFormat );
+
+    ui.GraphicsView_Image->setScene( &_scene );
+    _scene.addItem( &_pixmap );
 }
 
 MainWindow::~MainWindow()
@@ -38,8 +45,8 @@ MainWindow::~MainWindow()
     cfg.setValue("MainWindows/Geometry", this->saveGeometry());
     cfg.setValue("MainWindows/State", this->saveState());
 
-    cfg.setValue("MWSplitter/Geometry", ui.splitter->saveGeometry() );
-    cfg.setValue("MWSplitter/State", ui.splitter->saveState() );
+    cfg.setValue("MWSplitter/Geometry", ui.Splitter_Main->saveGeometry() );
+    cfg.setValue("MWSplitter/State", ui.Splitter_Main->saveState() );
 
     cfg.setValue("View/BottomButtons", ui.actionBottom_buttons->isChecked());
     cfg.setValue("View/History", ui.actionHistory->isChecked());
@@ -53,9 +60,51 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionOpenPicture_triggered()
 {
-    QString filePath = QFileDialog::getOpenFileName();
-    if( openPicture(filePath) )
-        addToHistory( filePath );
+
+    QStringList files = QFileDialog::getOpenFileNames(this,
+                                                      tr("Select image files"),
+                                                      QStandardPaths::writableLocation( QStandardPaths::PicturesLocation )
+                                                      );
+
+    quint64 i = 0;
+    QProgressDialog progress(this);
+    progress.setMaximum( files.count() );
+    progress.setModal( true );
+    progress.setLabelText( tr("Files opening...") );
+    progress.show();
+
+//        if( true ){
+//            foreach (QString filePath, files) {
+//                if( ! progress.isVisible() )
+//                    return;
+//                addToHistory( filePath );
+
+
+//                QPixmap pm;
+//                if( pm.load( filePath ) ){
+//                    auto scene = new QGraphicsScene;
+//                    auto img = new QGraphicsPixmapItem( pm );
+//                    img->setRotation(45);
+//                    scene->addItem( img );
+//                    ui.graphicsView->setScene( scene );
+//                }
+
+//                progress.setValue( ++i );
+//                qApp->processEvents();
+//            }
+
+//            return;
+//        }
+
+    foreach (QString filePath, files) {
+        if( ! progress.isVisible() )
+            return;
+        if( openPicture(filePath) )
+            addToHistory( filePath );
+
+        progress.setValue( ++i );
+        qApp->processEvents();
+    }
 }
 
 void MainWindow::on_PushButton_Open_clicked()
@@ -85,9 +134,9 @@ bool MainWindow::openPicture(const QString &filePath)
             statusFilePath.setText( filePath );
             statusImageWidth.setText( "W: " + QString::number( pm.width() ) );
             statusImageHeight.setText( "H: " + QString::number( pm.height() ) );
-            qDebug() << filePath.indexOf('.');
             statusImageFormat.setText( ImageFormat );
-            ui.Label_Image->setPixmap( pm );
+
+            _pixmap.setPixmap( pm );
             return true;
         }
     }
@@ -101,8 +150,8 @@ bool MainWindow::addToHistory(const QString &filePath)
         _historyModel.setStringList( _history );
 
 
-//        QModelIndex currentIndex = ui.ListView_History->currentIndex();
-//        QModelIndex nextIndex    = currentIndex.sibling(ui.ListView_History->model()->rowCount(),0);
+        //        QModelIndex currentIndex = ui.ListView_History->currentIndex();
+        //        QModelIndex nextIndex    = currentIndex.sibling(ui.ListView_History->model()->rowCount(),0);
         ui.ListView_History->setCurrentIndex( _historyModel.index(_history.count()-1,0) );
 
         return true;
@@ -139,7 +188,8 @@ void MainWindow::on_actionBottom_buttons_triggered(bool checked)
 
 void MainWindow::on_actionCloseImage_triggered()
 {
-    ui.Label_Image->clear();
+    /// \todo crash fix it
+    _scene.clear();
 }
 
 void MainWindow::on_actionNextPicture_triggered()
@@ -191,21 +241,29 @@ void MainWindow::on_actionClear_triggered()
 void MainWindow::on_actionLoad_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName();
+    int notFindCounter = 0;
 
     QFile file( fileName );
     if( file.open( QIODevice::ReadOnly ) ){
         QTextStream stream(&file);
         while( ! stream.atEnd() ) {
-            _history.append( stream.readLine() );
+            QString str = stream.readLine();
+            if( QFile::exists(str) )
+                _history.append( str );
+            else
+                notFindCounter++;
         }
         file.close();
+        statusFilePath.setText( "История загружена. %n" );
         _historyModel.setStringList( _history );
     }
 }
 
 void MainWindow::on_actionScaled_content_triggered(bool checked)
 {
-    ui.Label_Image->setScaledContents(checked);
+    /// \todo Adjust scale
+    if(checked)
+        _pixmap.setScale(1);
 }
 
 void MainWindow::on_actionRemove_selected_triggered()
