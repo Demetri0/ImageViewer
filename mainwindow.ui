@@ -206,6 +206,9 @@
    <addaction name="actionNextPicture"/>
    <addaction name="separator"/>
    <addaction name="actionScaled_content"/>
+   <addaction name="actionOriginScale"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="actionZoomOut"/>
    <addaction name="actionCloseImage"/>
    <addaction name="separator"/>
    <addaction name="actionClear"/>
@@ -370,6 +373,39 @@
    </property>
    <property name="text">
     <string>Remove selected</string>
+   </property>
+  </action>
+  <action name="actionOriginScale">
+   <property name="icon">
+    <iconset theme="zoom-original"/>
+   </property>
+   <property name="text">
+    <string>OriginScale</string>
+   </property>
+   <property name="toolTip">
+    <string>Set origin image size</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="icon">
+    <iconset theme="zoom-in"/>
+   </property>
+   <property name="text">
+    <string>ZoomIn</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom in</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="icon">
+    <iconset theme="zoom-out"/>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="toolTip">
+    <string>Zoom out</string>
    </property>
   </action>
  </widget>

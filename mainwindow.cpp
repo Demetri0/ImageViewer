@@ -251,3 +251,18 @@ void MainWindow::on_actionRemove_selected_triggered()
     _history.removeAt( currentIndex.row() );
     _historyModel.setStringList( _history );
 }
+
+void MainWindow::on_actionOriginScale_triggered()
+{
+    ui.Pixmap->setOriginScale();
+}
+
+void MainWindow::on_actionZoomIn_triggered()
+{
+    ui.Pixmap->zoomIn();
+}
+
+void MainWindow::on_actionZoomOut_triggered()
+{
+    ui.Pixmap->zoomOut();
+}

@@ -41,6 +41,12 @@ private slots:
     void on_actionScaled_content_triggered(bool checked);
     void on_actionRemove_selected_triggered();
 
+    void on_actionOriginScale_triggered();
+
+    void on_actionZoomIn_triggered();
+
+    void on_actionZoomOut_triggered();
+
 private:
     Ui::MainWindow ui;
     int _currentHistoryItem = 0;

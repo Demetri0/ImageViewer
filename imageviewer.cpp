@@ -5,7 +5,7 @@
 
 void ImageViewer::initScene()
 {
-    _scene.addItem( &_pixmap );
+    _scene.addItem( & _pixmap );
     this->setScene( & _scene );
 }
 
@@ -25,10 +25,7 @@ ImageViewer::ImageViewer(const QString &filePath, QWidget *parent)
 {
     initScene();
 
-    QPixmap pix;
-    pix.load(filePath);
-
-    _pixmap.setPixmap( filePath );
+    setPixmap( filePath );
 }
 
 ImageViewer::ImageViewer(const QPixmap &pixmap, QWidget *parent)
@@ -36,12 +33,40 @@ ImageViewer::ImageViewer(const QPixmap &pixmap, QWidget *parent)
 {
     initScene();
 
-    _pixmap.setPixmap( pixmap );
+    setPixmap( pixmap );
+}
+
+void ImageViewer::zoomIn(const QPointF &)
+{
+    changeScale( 1+ZOOM_FACTOR );
+}
+
+void ImageViewer::zoomOut(const QPointF &)
+{
+    changeScale( 1-ZOOM_FACTOR );
+}
+
+void ImageViewer::setAdjustScale(const bool )
+{
+    /// \todo Adjust content scale
+}
+
+void ImageViewer::setOriginScale()
+{
+    _pixmap.setScale( 1 );
 }
 
 void ImageViewer::setPixmap(const QPixmap &pixmap)
 {
     _pixmap.setPixmap( pixmap );
+}
+
+void ImageViewer::setPixmap(const QString &filePath)
+{
+    QPixmap pix;
+    pix.load(filePath);
+
+    setPixmap(pix);
 }
 
 QPixmap ImageViewer::pixmap()
@@ -51,10 +76,9 @@ QPixmap ImageViewer::pixmap()
 
 void ImageViewer::wheelEvent(QWheelEvent *e)
 {
-    // e->modifiers() == Qt::ControlModifier
     if( e->delta() > 0 ){
-        changeScale( 1.25 );
+        zoomIn( e->pos() );
     }else{
-        changeScale( 0.85 );
+        zoomOut( e->pos() );
     }
 }
