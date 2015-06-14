@@ -36,14 +36,16 @@ ImageViewer::ImageViewer(const QPixmap &pixmap, QWidget *parent)
     setPixmap( pixmap );
 }
 
-void ImageViewer::zoomIn(const QPointF &)
+void ImageViewer::zoomIn(const QPointF &p)
 {
     changeScale( 1+ZOOM_FACTOR );
+//    _pixmap.setPos( _pixmap.pos() - p );
 }
 
-void ImageViewer::zoomOut(const QPointF &)
+void ImageViewer::zoomOut(const QPointF &p)
 {
     changeScale( 1-ZOOM_FACTOR );
+//    _pixmap.setPos( _pixmap.pos() - p );
 }
 
 void ImageViewer::setAdjustScale(const bool )
@@ -82,3 +84,17 @@ void ImageViewer::wheelEvent(QWheelEvent *e)
         zoomOut( e->pos() );
     }
 }
+
+void ImageViewer::mousePressEvent(QMouseEvent *e)
+{
+    _mousePressPoint = e->pos() - _pixmap.pos();
+}
+
+void ImageViewer::mouseMoveEvent(QMouseEvent *e)
+{
+    qreal px = e->pos().x() - _mousePressPoint.x();
+    qreal py = e->pos().y() - _mousePressPoint.y();
+
+    _pixmap.setPos( px, py );
+}
+

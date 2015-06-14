@@ -11,7 +11,7 @@ private:
     constexpr static const qreal ZOOM_FACTOR = 0.25;
     QGraphicsScene      _scene;
     QGraphicsPixmapItem _pixmap;
-
+    QPointF             _mousePressPoint;
 
     void initScene();
     void changeScale(qreal scale);
@@ -32,6 +32,8 @@ public:
 
 protected:
     void wheelEvent(QWheelEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
 };
 
 #endif // IMAGEVIEWER_H
